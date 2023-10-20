@@ -1,42 +1,44 @@
 import React, { useState } from 'react';
+import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
+import TaskList from './components/TaskList';
+import AddTask from './components/AddTask';
 
 function App() {
   const [tasks, setTasks] = useState([]);
-  const [task, setTask] = useState('');
 
-  const handleAddTask = () => {
-    if (task.trim() !== '') {
-      setTasks([...tasks, task]);
-      setTask('');
-    }
+  const addTask = (task) => {
+    setTasks([...tasks, task]);
   };
 
-  const handleDeleteTask = (index) => {
+  const deleteTask = (index) => {
     const updatedTasks = tasks.filter((_, i) => i !== index);
     setTasks(updatedTasks);
   };
 
   return (
-    <div className="App">
-      <h1>React To-Do List</h1>
-      <div>
-        <input
-          type="text"
-          placeholder="Add a task..."
-          value={task}
-          onChange={(e) => setTask(e.target.value)}
-        />
-        <button onClick={handleAddTask}>Add</button>
+    <Router>
+      <div className="App">
+        <h1>Task Management App</h1>
+        <nav>
+          <ul>
+            <li>
+              <Link to="/">Home</Link>
+            </li>
+            <li>
+              <Link to="/add-task">Add Task</Link>
+            </li>
+          </ul>
+        </nav>
+        <Switch>
+          <Route exact path="/">
+            <TaskList tasks={tasks} deleteTask={deleteTask} />
+          </Route>
+          <Route path="/add-task">
+            <AddTask addTask={addTask} />
+          </Route>
+        </Switch>
       </div>
-      <ul>
-        {tasks.map((task, index) => (
-          <li key={index}>
-            {task}
-            <button onClick={() => handleDeleteTask(index)}>Delete</button>
-          </li>
-        ))}
-      </ul>
-    </div>
+    </Router>
   );
 }
 
