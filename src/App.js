@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
 import TaskList from './components/TaskList';
@@ -40,6 +41,13 @@ function App() {
       </div>
     </Router>
   );
+=======
+import React from 'react';
+
+function App() {
+  const value = 'World';
+  return <div>Hello {value}</div>;
+>>>>>>> parent of 8e1f6c9 (Test)
 }
 
 export default App;
